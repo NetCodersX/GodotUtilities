@@ -251,6 +251,9 @@ public partial class Player : CharacterBody2D, ISaveable
     [Save] private int      score;
     [Save] private Vector2  lastPosition;
     [Save] private GameMode currentMode;   // enums are supported
+    [Save] private SlotData slotData; // resources are supported as long as they use the ISerializableResource interface
+    [Save] private Dictionary<Vector2I, SoilCell> cells; // same here
+    [Save] private List<SlotData> slots; // same here
 }
 ```
 

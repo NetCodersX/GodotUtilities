@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="InventoryConfig" format=3 uid="uid://dduxg5hrr1ebj"]
+
+[ext_resource type="Resource" uid="uid://cxen7xrncm1hp" path="res://addons/utilities/src/inventory/resources/inventory_datas/player_inventory.tres" id="1_67hs1"]
+[ext_resource type="PackedScene" uid="uid://cyjccsjpqtcam" path="res://addons/utilities/src/inventory/scenes/inventory_ui.tscn" id="1_yacga"]
+[ext_resource type="PackedScene" uid="uid://cry6wcfscgi3o" path="res://addons/utilities/src/inventory/scenes/hotbar.tscn" id="2_lyrjn"]
+[ext_resource type="PackedScene" uid="uid://ddkb8auq3r8a6" path="res://scenes/lootItem.tscn" id="3_2a000"]
+[ext_resource type="Script" uid="uid://c7b6agr8kn0j5" path="res://addons/utilities/src/inventory/scripts/core/InventoryConfig.cs" id="3_67hs1"]
+[ext_resource type="Resource" uid="uid://bxavvnbgo1del" path="res://addons/utilities/src/inventory/resources/inventory_datas/player_hotbar.tres" id="3_rf71c"]
+[ext_resource type="PackedScene" uid="uid://dgwtyovwqjfm2" path="res://addons/utilities/src/inventory/scenes/slot_ui.tscn" id="4_rf71c"]
+[ext_resource type="Script" uid="uid://datbs58orv4vq" path="res://addons/utilities/src/inventory/scripts/core/ItemData.cs" id="5_g048n"]
+[ext_resource type="Resource" uid="uid://baypwi1uehoaa" path="res://resources/items/stone.tres" id="6_6e7vj"]
+[ext_resource type="Resource" uid="uid://dyp1jy3kvkv3l" path="res://resources/items/wood.tres" id="7_ssrp2"]
+[ext_resource type="Resource" uid="uid://p4oxfscolkin" path="res://resources/seed/carrot_seed.tres" id="8_ceyl0"]
+[ext_resource type="Resource" uid="uid://dm88ahcxmj5ey" path="res://resources/seed/wheat_seed.tres" id="9_4fcdi"]
+[ext_resource type="Resource" uid="uid://dqxssajolbvt3" path="res://resources/structures/chest.tres" id="10_u6xhx"]
+[ext_resource type="Resource" uid="uid://bycwy4l8dll0u" path="res://resources/structures/fence_data.tres" id="11_tjpjh"]
+[ext_resource type="Resource" uid="uid://bpyjrkqm14qs4" path="res://resources/tools/stone_axe.tres" id="12_tv0ji"]
+[ext_resource type="Resource" uid="uid://uyde2pci7lkc" path="res://resources/tools/stone_hoe.tres" id="13_laclo"]
+[ext_resource type="Resource" uid="uid://bdk3nmfq0fiqc" path="res://resources/tools/stone_pickaxe.tres" id="14_6a80l"]
+[ext_resource type="Resource" uid="uid://r5pi3tmbeyaj" path="res://resources/tools/water_can.tres" id="15_4gdwr"]
+[ext_resource type="Resource" uid="uid://draqip28jwp60" path="res://resources/crops/wheat.tres" id="16_ssrp2"]
+[ext_resource type="Resource" uid="uid://ct8gf47f36s18" path="res://resources/crops/carrot.tres" id="17_ceyl0"]
+
+[resource]
+script = ExtResource("3_67hs1")
+defaultInventory = ExtResource("1_67hs1")
+hotbarData = ExtResource("3_rf71c")
+itemDatabase = Array[ExtResource("5_g048n")]([ExtResource("6_6e7vj"), ExtResource("7_ssrp2"), ExtResource("8_ceyl0"), ExtResource("9_4fcdi"), ExtResource("10_u6xhx"), ExtResource("11_tjpjh"), ExtResource("12_tv0ji"), ExtResource("13_laclo"), ExtResource("14_6a80l"), ExtResource("15_4gdwr"), ExtResource("16_ssrp2"), ExtResource("17_ceyl0")])
+defaultInventoryScene = ExtResource("1_yacga")
+hotbarScene = ExtResource("2_lyrjn")
+slotUiScene = ExtResource("4_rf71c")
+lootItemScene = ExtResource("3_2a000")
+metadata/_custom_type_script = "uid://c7b6agr8kn0j5"

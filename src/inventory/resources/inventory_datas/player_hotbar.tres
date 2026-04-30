@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InventoryData" format=3 uid="uid://bxavvnbgo1del"]
+
+[ext_resource type="Script" uid="uid://dj6oa83evn253" path="res://addons/utilities/src/inventory/scripts/core/InventoryData.cs" id="1_etrm2"]
+
+[resource]
+script = ExtResource("1_etrm2")
+slotCount = 5
+metadata/_custom_type_script = "uid://dj6oa83evn253"

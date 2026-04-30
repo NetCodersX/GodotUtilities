@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cyjccsjpqtcam"]
+
+[ext_resource type="Script" uid="uid://c17a8gdbh8xi2" path="res://addons/utilities/src/inventory/scripts/ui/InventoryUi.cs" id="1_8su62"]
+[ext_resource type="PackedScene" uid="uid://dgwtyovwqjfm2" path="res://addons/utilities/src/inventory/scenes/slot_ui.tscn" id="2_os1l6"]
+
+[node name="PlayerInventory" type="Panel" unique_id=2125316820 node_paths=PackedStringArray("slotsContainer")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -21.75
+offset_right = 30.0
+offset_bottom = 21.75
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8su62")
+slotScene = ExtResource("2_os1l6")
+slotsContainer = NodePath("SlotsContainer")
+
+[node name="SlotsContainer" type="GridContainer" parent="." unique_id=871945263]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -18.0
+offset_right = 28.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="SlotUI" parent="SlotsContainer" unique_id=328367618 instance=ExtResource("2_os1l6")]
+layout_mode = 2
+
+[node name="SlotUI2" parent="SlotsContainer" unique_id=1576015730 instance=ExtResource("2_os1l6")]
+layout_mode = 2
+
+[node name="SlotUI3" parent="SlotsContainer" unique_id=289529788 instance=ExtResource("2_os1l6")]
+layout_mode = 2
+
+[node name="SlotUI4" parent="SlotsContainer" unique_id=1989596796 instance=ExtResource("2_os1l6")]
+layout_mode = 2
+
+[node name="SlotUI5" parent="SlotsContainer" unique_id=876090163 instance=ExtResource("2_os1l6")]
+layout_mode = 2
+
+[node name="SlotUI6" parent="SlotsContainer" unique_id=1715452926 instance=ExtResource("2_os1l6")]
+layout_mode = 2

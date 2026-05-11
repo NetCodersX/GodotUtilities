@@ -16,6 +16,7 @@ res://
     └── utilities/
         ├── plugin.cfg
         ├── plugin.gd
+        ├── generated/
         └── src/
             └── ...
 ```
@@ -260,10 +261,8 @@ public partial class Player : CharacterBody2D, ISaveable
 Then add the node to the `Saveable` group so `SaveManager` can find it — either in the editor (Node → Groups) or in code:
 
 ```csharp
-public override void _Ready()
-{
-    AddToGroup(SaveManager.SaveGroup);
-}
+public override void _EnterTree() => SaveManager.Instance.Register(this);
+public override void _ExitTree() => SaveManager.Instance.Unregister(this);
 ```
 
 #### Custom serialize / deserialize logic
@@ -288,9 +287,6 @@ public void OnDeserialize(Dictionary data)
 ```csharp
 SaveManager.Instance.Save();         // save to slot 1
 SaveManager.Instance.Load();         // load from slot 1
-
-SaveManager.Instance.Save(SaveManager.Slot.Slot2);
-SaveManager.Instance.Load(SaveManager.Slot.Slot2);
 
 SaveManager.Instance.SaveExists();   // check before loading
 SaveManager.Instance.DeleteSave();
@@ -342,18 +338,6 @@ tween.Sine().EaseOut();  // fluent transition/ease chaining
 
 ### Other Utilities
 
-**NodeInjector** — inject node references by attribute instead of `GetNode`.
-```csharp
-[NodeRef] private Sprite2D sprite; // uses field name as a path
-[NodeRef("UI/HealthBar")] private ProgressBar healthBar; // custom path
-
-public override void _Notification(int what)
-{
-    if (what == NotificationSceneInstantiated)
-        this.WireNodes();
-}
-```
-
 **InputBuffer** — buffers and expires input actions by name.
 ```csharp
 buffer.BufferAction("jump", duration: 0.15f);
@@ -365,12 +349,3 @@ if (buffer.TryConsume("jump")) Jump();
 
 ---
 
-## Project Settings
-
-The following paths must be set in **Project → Project Settings**:
-
-| Key | Points to |
-|---|---|
-| `godot_utilities/audio_config_path` | `AudioConfig` resource |
-| `godot_utilities/inventory_config_path` | `InventoryConfig` resource |
-| `godot_utilities/particles_registry_path` | `ParticlesRegistry` resource |

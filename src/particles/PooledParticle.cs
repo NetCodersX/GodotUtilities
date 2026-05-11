@@ -19,6 +19,7 @@ public partial class PooledParticle : GpuParticles2D
 
         GlobalPosition = pos;
         Restart();
+        Emitting = true;
     }
 
     private void OnFinished()

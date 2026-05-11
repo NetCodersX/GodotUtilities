@@ -11,11 +11,13 @@ public partial class AudioManager : Node
     private const string MASTER_BUS   = "Master";
     private const string AMBIENCE_BUS = "Ambience";
 
-    private const string SETTING_CONFIG_PATH = "godot_utilities/audio_config_path";
+    private const string SETTING_SFX_POOL_SIZE = "godot_utilities/audio_sfx_pool_size";
+    private const string SETTING_SFX_POOL_TRIM_COOLDOWN = "godot_utilities/audio_sfx_pool_trim_cooldown";
 
     public static AudioManager Instance { get; private set; }
 
-    private AudioConfig config;
+    private static int SfxPoolSize;
+    private static float SfxPoolTrimCooldown;
 
     private readonly Dictionary<StringName, AudioStream> sfxCache = new();
     private readonly Dictionary<StringName, AudioStream> musicCache = new();
@@ -43,29 +45,28 @@ public partial class AudioManager : Node
 
     public override void _Ready()
     {
-        SetupConfig();
+        Setup();
         CreatePool();
         CreatePoolTrimTimer();
     }
 
     #region Initialization
 
-    private void SetupConfig()
+    private void Setup()
     {
-        string path = ProjectSettings.GetSetting(SETTING_CONFIG_PATH).AsString();
-        config = ResourceLoader.Load<AudioConfig>(path) ?? 
-            throw new System.Exception("AudioManager: Invalid Config Path. Check GodotUtilities Audio Config Path in Project Settings");
+        SfxPoolSize = ProjectSettings.GetSetting(SETTING_SFX_POOL_SIZE).AsInt32();
+        SfxPoolTrimCooldown = ProjectSettings.GetSetting(SETTING_SFX_POOL_TRIM_COOLDOWN).AsSingle();
     }
 
     private void CreatePool()
     {
-        sfxPool   = new(CreatePooledPlayer<PooledAudioPlayer>, config.SfxPoolSize);
-        sfxPool2D = new(CreatePooledPlayer<PooledAudioPlayer2D>, config.SfxPoolSize);
+        sfxPool   = new(CreatePooledPlayer<PooledAudioPlayer>, SfxPoolSize);
+        sfxPool2D = new(CreatePooledPlayer<PooledAudioPlayer2D>, SfxPoolSize);
     }
 
     private void CreatePoolTrimTimer()
     {
-        timer = new Timer { Autostart = true, OneShot = false, WaitTime = config.SfxPoolTrimCooldown };
+        timer = new Timer { Autostart = true, OneShot = false, WaitTime = SfxPoolTrimCooldown };
         AddChild(timer);
         timer.Timeout += OnTimerTimeout;
     }
@@ -84,7 +85,7 @@ public partial class AudioManager : Node
 
     private void OnTimerTimeout()
     {
-        int limit = config.SfxPoolSize;
+        int limit = SfxPoolSize;
         if (sfxPool.FreeCount > limit * 2) sfxPool.Trim(limit, OnTrim);
         if (sfxPool2D.FreeCount > limit * 2) sfxPool2D.Trim(limit, OnTrim2D);
     }

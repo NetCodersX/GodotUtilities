@@ -47,13 +47,14 @@ After enabling the plugin these settings will appear under `godot_utilities/`:
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `audio_config_path` | `res://resources/audio_config.tres` | Path to the `AudioConfig` resource |
 | `inventory_config_path` | `res://resources/inventory_config.tres` | Path to the `InventoryConfig` resource |
 | `sfx_folder` | `res://assets/audio/sfx` | Folder scanned for SFX files |
 | `music_folder` | `res://assets/audio/music` | Folder scanned for music files |
 | `ambience_folder` | `res://assets/audio/ambience` | Folder scanned for ambience files |
 | `particles_folder` | `res://scenes/particles` | Folder scanned for particle scenes |
 | `ui_panels_folder` | `res://scenes/ui/panels` | Folder scanned for UI panel scenes |
+| `audio_sfx_pool_size` | `4` | Initial Size of Sfx Pool |
+| `audio_sfx_pool_trim_cooldown` | `5.0` | A Cooldown to remove unused sfx nodes |
 
 ---
 
@@ -126,15 +127,6 @@ AudioManager.Instance.UnloadSfx(AudioManager.SfxName.WaterCan);
 AudioManager.Instance.UnloadAllSfx();
 AudioManager.Instance.UnloadAll();
 ```
-
-#### AudioConfig Resource
-
-Create a `AudioConfig` resource (`.tres`) at the path set in Project Settings.
-
-| Property | Default | Description |
-|----------|---------|-------------|
-| `SfxPoolSize` | `16` | Initial pool size for SFX players |
-| `SfxPoolTrimCooldown` | `5.0` | Seconds between pool trim passes |
 
 #### Adding New Audio Files
 

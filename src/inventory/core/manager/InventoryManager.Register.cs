@@ -1,10 +1,15 @@
 using Godot;
-using Utilities.UI;
 
 namespace Utilities.InventorySystem;
 
 public partial class InventoryManager
 {
+    public void RegisterHotbarUI(InventoryUI ui)
+    {
+        hotbarUI = ui;
+        UpdateHotbar(0);
+    }
+
     private void InitConfig()
     {
         string path = ProjectSettings.GetSetting("godot_utilities/inventory_config_path").AsString();
@@ -12,14 +17,7 @@ public partial class InventoryManager
         config = ResourceLoader.Load<InventoryConfig>(path) ?? 
             throw new System.Exception("Invalid Config Path. Check GodotUtilities Inventory Config Path in Project Settings");
     }
-
-    private void InitHotbar()
-    {
-        hotbarUI = config.CreateHotbarUI(UIManager.Instance.HudLayer);
-        HotbarData = config.HotbarData;
-        HotbarData.InventoryUpdated += data => EmitSignalHotbarUpdated(data.GetSlotData(currentIndex));
-    }
-
+    
     #region Hotbar Handling
 
     public void UpdateHotbarDirection(int dir)
@@ -30,12 +28,12 @@ public partial class InventoryManager
 
     public void UpdateHotbar(int index)
     {
-        if (index < 0 || index > HotbarData.Capacity - 1)
-            return;
+        if (hotbarUI is null) return;
+        if (index < 0 || index > HotbarData.Capacity - 1) return;
 
-        hotbarUI.GetSlotUI(currentIndex).OnDeselect();
+        hotbarUI.GetSlotUI(currentIndex)?.OnDeselect();
         currentIndex = index;
-        hotbarUI.GetSlotUI(currentIndex).OnSelect();
+        hotbarUI.GetSlotUI(currentIndex)?.OnSelect();
 
         EmitSignalHotbarUpdated(HotbarData.GetSlotData(currentIndex));
     }

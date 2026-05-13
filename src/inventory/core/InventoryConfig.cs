@@ -51,13 +51,4 @@ public partial class InventoryConfig : Resource
         itemPreview.UpdateState(null);
         return itemPreview;
     }
-
-    public InventoryUI CreateHotbarUI(Node parent)
-    {
-        var instance = hotbarScene.Instantiate<InventoryUI>();
-        parent.AddChild(instance);
-
-        instance.Attach(HotbarData);
-        return instance;
-    }
 }

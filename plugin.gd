@@ -2,29 +2,30 @@
 extends EditorPlugin
 
 const AUTOLOADS: Dictionary = {
-	"SaveManager": "res://addons/utilities/src/save_system/SaveManager.cs",
-	"AudioManager": "res://addons/utilities/src/audio/AudioManager.cs",
-	"ParticlesManager": "res://addons/utilities/src/particles/ParticlesManager.cs",
-	"UIManager": "res://addons/utilities/src/ui_management/UIManager.cs",
-	"InventoryManager": "res://addons/utilities/src/inventory/core/manager/InventoryManager.cs",
-	"Physics2D": "res://addons/utilities/src/logic/Physics2D.cs",
+	"SaveManager": "res://addons/GodotUtilities/src/save_system/SaveManager.cs",
+	"AudioManager": "res://addons/GodotUtilities/src/audio/AudioManager.cs",
+	"ParticlesManager": "res://addons/GodotUtilities/src/particles/ParticlesManager.cs",
+	"UIManager": "res://addons/GodotUtilities/src/ui_management/UIManager.cs",
+	"InventoryManager": "res://addons/GodotUtilities/src/inventory/core/manager/InventoryManager.cs",
+	"Physics2D": "res://addons/GodotUtilities/src/logic/Physics2D.cs",
 }
 
 const SETTINGS: Dictionary = {
-	"godot_utilities/inventory_config_path": "res://resources/inventory_config.tres",
-	"godot_utilities/audio_config_path": "res://resources/audio_config.tres",
-
-	"godot_utilities/sfx_folder": "res://assets/audio/sfx",
-	"godot_utilities/music_folder": "res://assets/audio/music",
-	"godot_utilities/ambience_folder": "res://assets/audio/ambience",
-	"godot_utilities/particles_folder": "res://scenes/particles",
-	"godot_utilities/ui_panels_folder": "res://scenes/ui/panels",
-
+	"godot_utilities/inventory_config_path": "",
+	
+	"godot_utilities/sfx_folder": "",
+	"godot_utilities/music_folder": "",
+	"godot_utilities/ambience_folder": "",
+	"godot_utilities/particles_folder": "",
+	
+	"godot_utilities/ui_panels_folder": "",
+	"godot_utilities/ui_hud_panels_folder": "",
+	
 	"godot_utilities/audio_sfx_pool_size": 4,
 	"godot_utilities/audio_sfx_pool_trim_cooldown": 5.0,
 }
 
-const ID_GENERATOR = preload("res://addons/utilities/generator/id_generator.gd")
+const ID_GENERATOR = preload("res://addons/GodotUtilities/generator/id_generator.gd")
 
 func _enter_tree() -> void:
 	_add_settings()

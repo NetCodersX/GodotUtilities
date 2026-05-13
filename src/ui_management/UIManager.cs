@@ -27,6 +27,12 @@ public partial class UIManager : Node
         PopupLayer  = new() { Layer = 2, Name = "Popup" };  AddChild(PopupLayer);
     }
 
+    public override void _Ready()
+    {
+        foreach (var (id, _) in HudPanelPaths)
+            TryGetPanel(id, out _);
+    }
+
     #region Panel Loading
 
     private CanvasLayer ChooseLayer(UIPanel.PanelType type) => type switch

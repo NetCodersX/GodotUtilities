@@ -1,8 +1,8 @@
 @tool extends RefCounted
 
-const GENERATED_AUDIO_PATH     = "res://addons/utilities/generated/AudioManager.gen.cs"
-const GENERATED_PARTICLES_PATH = "res://addons/utilities/generated/ParticlesManager.gen.cs"
-const GENERATED_UI_PATH        = "res://addons/utilities/generated/UIManager.gen.cs"
+const GENERATED_AUDIO_PATH     = "res://addons/GodotUtilities/generated/AudioManager.gen.cs"
+const GENERATED_PARTICLES_PATH = "res://addons/GodotUtilities/generated/ParticlesManager.gen.cs"
+const GENERATED_UI_PATH        = "res://addons/GodotUtilities/generated/UIManager.gen.cs"
 
 const AUDIO_CATEGORIES: Array = [
 	{ "setting": "godot_utilities/sfx_folder",      "names": "SfxName"      },
@@ -10,7 +10,7 @@ const AUDIO_CATEGORIES: Array = [
 	{ "setting": "godot_utilities/ambience_folder", "names": "AmbienceName" },
 ]
 
-const ID_WRITER = preload("res://addons/utilities/generator/id_writer.gd")
+const ID_WRITER = preload("res://addons/GodotUtilities/generator/id_writer.gd")
 
 static func generate_all() -> void:
 	var generated_count = 0
@@ -34,13 +34,12 @@ static func _generate_audio() -> bool:
 	ID_WRITER.write_header(lines, "Utilities.AudioManagement", "AudioManager")
 
 	for cat in AUDIO_CATEGORIES:
-		var folder = ProjectSettings.get_setting(cat.setting, "")
-		var mapping = scan_folder(folder)   # Dictionary<StringName, string> (basename -> full path)
+		var folder  = ProjectSettings.get_setting(cat.setting, "")
+		var mapping = scan_folder(folder)
 		var keys    = mapping.keys()
 		keys.sort()
 		ID_WRITER.write_string_name_class(lines, cat.names, keys)
 		ID_WRITER.write_names_const(lines, cat.names.trim_suffix("Name") + "Names", keys)
-		# Add the paths dictionary (SfxPaths, MusicPaths, AmbiencePaths)
 		var dict_name = cat.names.trim_suffix("Name") + "Paths"
 		ID_WRITER.write_paths_dictionary(lines, dict_name, mapping)
 
@@ -49,7 +48,7 @@ static func _generate_audio() -> bool:
 	return true
 
 static func _generate_particles() -> bool:
-	var folder = ProjectSettings.get_setting("godot_utilities/particles_folder", "")
+	var folder  = ProjectSettings.get_setting("godot_utilities/particles_folder", "")
 	var mapping = scan_folder(folder)
 	var keys    = mapping.keys()
 	keys.sort()
@@ -65,23 +64,32 @@ static func _generate_particles() -> bool:
 	return true
 
 static func _generate_ui() -> bool:
-	var folder = ProjectSettings.get_setting("godot_utilities/ui_panels_folder", "")
-	var mapping = scan_folder(folder)
-	var keys    = mapping.keys()
-	keys.sort()
+	var folder     = ProjectSettings.get_setting("godot_utilities/ui_panels_folder", "")
+	var hud_folder = ProjectSettings.get_setting("godot_utilities/ui_hud_panels_folder", "")
+
+	var mapping     = scan_folder(folder)
+	var hud_mapping = scan_folder(hud_folder)
+
+	var all_mapping = mapping.duplicate()
+	for key in hud_mapping:
+		if all_mapping.has(key):
+			push_warning("IdGenerator: panel name '%s' exists in both folders." % key)
+	all_mapping.merge(hud_mapping)
+
+	var all_keys = all_mapping.keys()
+	all_keys.sort()
 
 	var lines: Array[String] = []
 	ID_WRITER.write_header(lines, "Utilities.UI", "UIManager")
-	ID_WRITER.write_string_name_class(lines, "PanelName", keys)
-	ID_WRITER.write_names_const(lines, "PanelNames", keys)
-	# Optional: add path dictionary for UI panels as well – uncomment if you want to use it
-	ID_WRITER.write_paths_dictionary(lines, "PanelPaths", mapping)
+	ID_WRITER.write_string_name_class(lines, "PanelName", all_keys)
+	ID_WRITER.write_names_const(lines, "PanelNames", all_keys)
+	ID_WRITER.write_paths_dictionary(lines, "PanelPaths", all_mapping)
+	ID_WRITER.write_paths_dictionary(lines, "HudPanelPaths", hud_mapping, "PanelName")
 	lines.append("}")
 
 	ID_WRITER.write_file(GENERATED_UI_PATH, lines)
 	return true
 
-# Returns a dictionary: basename (String) -> full "res://" path (String)
 static func scan_folder(path: String) -> Dictionary:
 	var dict := {}
 	if path.is_empty():

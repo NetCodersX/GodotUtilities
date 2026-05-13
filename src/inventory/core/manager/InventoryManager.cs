@@ -41,6 +41,12 @@ public partial class InventoryManager : Node, ISaveable
 
         InitConfig();
         itemCache = config.GetItemCache();
+
+        HotbarData = config.HotbarData;
+        HotbarData.InventoryUpdated += data => EmitSignalHotbarUpdated(data.GetSlotData(currentIndex));
+
+        PlayerInventory = config.PlayerInventory;
+        PlayerInventory.InventoryInteract += OnInventoryInteract;
     }
 
     public override void _ExitTree()
@@ -50,24 +56,15 @@ public partial class InventoryManager : Node, ISaveable
 
     public override async void _Ready()
     {
-        InitHotbar();
-
         stackTimer = config.CreateStackTimer(this);
         itemPreview = config.CreateItemPreview(UIManager.Instance.HudLayer);
         dropZone = config.CreateDropZone(UIManager.Instance.ScreenLayer);
 
         interactionHandler = new InteractionHandler(this, stackTimer);
 
-        PlayerInventory = config.PlayerInventory;
-        PlayerInventory.InventoryInteract += OnInventoryInteract;
-
         dropZone.GuiInput += OnDropZoneInput;
         UIManager.Instance.PanelOpened += OnPanelOpened;
         UIManager.Instance.PanelClosed += OnPanelClosed;
-
-        // Wait until Godot draws UI
-        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
-        UpdateHotbar(0);
     }
 
     public override void _Input(InputEvent @event)

@@ -36,8 +36,6 @@ func _enter_tree() -> void:
 	add_tool_menu_item("GodotUtilities: Add Autoloads", _add_autoload_singletons)
 
 func _exit_tree() -> void:
-	_remove_settings()
-
 	remove_tool_menu_item("GodotUtilities: Generate IDs")
 	remove_tool_menu_item("GodotUtilities: Add Autoloads")
 

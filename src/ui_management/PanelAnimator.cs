@@ -26,7 +26,7 @@ public static class PanelAnimator
         {
             case PanelTransition.Fade:     OnFade(panel, tween, isOpen);  break;
             case PanelTransition.Pop:      OnPop(panel, tween, isOpen);   break;
-            case PanelTransition.Slide:    OnSlide(panel, tween, isOpen); break;
+            case PanelTransition.Slide:   OnSlideV(panel, tween, isOpen); break;
             case PanelTransition.Constant: tween.TweenCallback(Callable.From(DummyMethod)); break;
         }
 
@@ -46,7 +46,7 @@ public static class PanelAnimator
         else tween.TweenPopOut(panel, POP_DURATION);
     }
 
-    private static void OnSlide(UIPanel panel, Tween tween, bool isOpen)
+    private static void OnSlideV(UIPanel panel, Tween tween, bool isOpen)
     {
         panel.DefaultPos ??= panel.Position;
             

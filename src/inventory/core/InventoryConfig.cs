@@ -15,7 +15,6 @@ public partial class InventoryConfig : Resource
 
     [ExportGroup("Scenes")]
     [Export] public PackedScene LootItemScene { get; private set; }
-    [Export] private PackedScene hotbarScene;
     [Export] private PackedScene itemPreviewScene;
 
     public Dictionary<StringName, ItemData> GetItemCache()

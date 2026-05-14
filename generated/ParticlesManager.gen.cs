@@ -10,7 +10,6 @@ public partial class ParticlesManager
 	/// </summary>
 	public static class ParticleName
 	{
-
 	}
 
 	/// <summary>
@@ -23,7 +22,6 @@ public partial class ParticlesManager
 	/// </summary>
 	public static readonly Godot.Collections.Dictionary<StringName, string> ParticlePaths = new()
 	{
-
 	};
 
 }

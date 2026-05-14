@@ -10,7 +10,6 @@ public partial class AudioManager
 	/// </summary>
 	public static class SfxName
 	{
-
 	}
 
 	/// <summary>
@@ -23,7 +22,6 @@ public partial class AudioManager
 	/// </summary>
 	public static readonly Godot.Collections.Dictionary<StringName, string> SfxPaths = new()
 	{
-
 	};
 
 	/// <summary>
@@ -31,7 +29,6 @@ public partial class AudioManager
 	/// </summary>
 	public static class MusicName
 	{
-
 	}
 
 	/// <summary>
@@ -44,7 +41,6 @@ public partial class AudioManager
 	/// </summary>
 	public static readonly Godot.Collections.Dictionary<StringName, string> MusicPaths = new()
 	{
-
 	};
 
 	/// <summary>
